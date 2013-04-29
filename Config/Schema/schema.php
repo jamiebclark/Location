@@ -367,6 +367,8 @@ class LocationSchema extends CakeSchema {
 		foreach ($this->countryData as $country) {
 			list($id, $title) = $country;
 			$data[] = compact(array('id', 'title'));
+		}
+		return $Country->saveAll($data);
 	}
 	
 	private function insertStates() {
