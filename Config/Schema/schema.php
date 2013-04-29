@@ -375,9 +375,11 @@ class LocationSchema extends CakeSchema {
 		$State = ClassRegistry::init('Location.State');
 		$State->create();
 		$data = array();
-		foreach ($this->stateData as $country_id => $state) {
-			list($id, $title) = $state;
-			$data[] = compact('country_id', 'id', 'title');
+		foreach ($this->stateData as $country_id => $countryStates) {
+			foreach ($countryStates as $state) {
+				list($id, $title) = $state;
+				$data[] = compact('country_id', 'id', 'title');
+			}
 		}
 		return $State->saveAll($data);
 	}
