@@ -1,6 +1,6 @@
 <?php 
 class LocationSchema extends CakeSchema {
-	private $countries = array(
+	private $countryData = array(
 		array("AF","Afghanistan"),
 		array("AL","Albania"),
 		array("DZ","Algeria"),
@@ -244,7 +244,7 @@ class LocationSchema extends CakeSchema {
 		array("ZW","Zimbabwe"),
 		array("M","US Military Base"),
 	);
-	private $states = array(
+	private $stateData = array(
 		'US' => array(
 			array("AK","Alaska"),
 			array("AL","Alabama"),
@@ -364,7 +364,7 @@ class LocationSchema extends CakeSchema {
 		$Country = ClassRegistry::init('Location.Country');
 		$Country->create();
 		$data = array();
-		foreach ($this->countries as $country) {
+		foreach ($this->countryData as $country) {
 			list($id, $title) = $country;
 			$data[] = compact(array('id', 'title'));
 	}
@@ -373,7 +373,7 @@ class LocationSchema extends CakeSchema {
 		$State = ClassRegistry::init('Location.State');
 		$State->create();
 		$data = array();
-		foreach ($this->states as $country_id => $state) {
+		foreach ($this->stateData as $country_id => $state) {
 			list($id, $title) = $state;
 			$data[] = compact('country_id', 'id', 'title');
 		}
