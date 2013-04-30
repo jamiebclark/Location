@@ -14,6 +14,6 @@ class MappableBehavior extends ModelBehavior {
 					'foreignKey' => 'country',
 				)
 			)
-		));
+		), false);
 	}
 }
