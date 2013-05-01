@@ -319,6 +319,166 @@ class LocationSchema extends CakeSchema {
 		)
 	);
 
+	private $timezoneData = array(
+		array("1","America/Adak","","0.00"),
+		array("2","America/Anchorage","","0.00"),
+		array("3","America/Anguilla","","0.00"),
+		array("4","America/Antigua","","0.00"),
+		array("5","America/Araguaina","","0.00"),
+		array("6","America/Argentina/Buenos_Aires","","-3.00"),
+		array("7","America/Argentina/Catamarca","","0.00"),
+		array("8","America/Argentina/ComodRivadavia","","0.00"),
+		array("9","America/Argentina/Cordoba","","0.00"),
+		array("10","America/Argentina/Jujuy","","0.00"),
+		array("11","America/Argentina/La_Rioja","","0.00"),
+		array("12","America/Argentina/Mendoza","","0.00"),
+		array("13","America/Argentina/Rio_Gallegos","","0.00"),
+		array("14","America/Argentina/Salta","","0.00"),
+		array("15","America/Argentina/San_Juan","","0.00"),
+		array("16","America/Argentina/San_Luis","","0.00"),
+		array("17","America/Argentina/Tucuman","","0.00"),
+		array("18","America/Argentina/Ushuaia","","0.00"),
+		array("19","America/Aruba","","0.00"),
+		array("20","America/Asuncion","","0.00"),
+		array("21","America/Atikokan","","0.00"),
+		array("22","America/Atka","","0.00"),
+		array("23","America/Bahia","","0.00"),
+		array("24","America/Barbados","","0.00"),
+		array("25","America/Belem","","0.00"),
+		array("26","America/Belize","","0.00"),
+		array("27","America/Blanc-Sablon","","0.00"),
+		array("28","America/Boa_Vista","","0.00"),
+		array("29","America/Bogota","","0.00"),
+		array("30","America/Boise","","0.00"),
+		array("31","America/Buenos_Aires","","0.00"),
+		array("32","America/Cambridge_Bay","","0.00"),
+		array("33","America/Campo_Grande","","0.00"),
+		array("34","America/Cancun","","0.00"),
+		array("35","America/Caracas","","-4.00"),
+		array("36","America/Catamarca","","0.00"),
+		array("37","America/Cayenne","","0.00"),
+		array("38","America/Cayman","","0.00"),
+		array("39","America/Chicago","Central Time","-4.00"),
+		array("40","America/Chihuahua","","0.00"),
+		array("41","America/Coral_Harbour","","0.00"),
+		array("42","America/Cordoba","","0.00"),
+		array("43","America/Costa_Rica","","0.00"),
+		array("44","America/Cuiaba","","0.00"),
+		array("45","America/Curacao","","0.00"),
+		array("46","America/Danmarkshavn","","0.00"),
+		array("47","America/Dawson","","0.00"),
+		array("48","America/Dawson_Creek","","0.00"),
+		array("49","America/Denver","Mountain Time","-7.00"),
+		array("50","America/Detroit","","0.00"),
+		array("51","America/Dominica","","0.00"),
+		array("52","America/Edmonton","","0.00"),
+		array("53","America/Eirunepe","","0.00"),
+		array("54","America/El_Salvador","","0.00"),
+		array("55","America/Ensenada","","0.00"),
+		array("56","America/Fort_Wayne","","0.00"),
+		array("57","America/Fortaleza","","0.00"),
+		array("58","America/Glace_Bay","","0.00"),
+		array("59","America/Godthab","","0.00"),
+		array("60","America/Goose_Bay","","0.00"),
+		array("61","America/Grand_Turk","","0.00"),
+		array("62","America/Grenada","","0.00"),
+		array("63","America/Guadeloupe","","0.00"),
+		array("64","America/Guatemala","","0.00"),
+		array("65","America/Guayaquil","","0.00"),
+		array("66","America/Guyana","","0.00"),
+		array("67","America/Halifax","","0.00"),
+		array("68","America/Havana","","0.00"),
+		array("69","America/Hermosillo","","0.00"),
+		array("70","America/Indiana/Indianapolis","","0.00"),
+		array("71","America/Indiana/Knox","","0.00"),
+		array("72","America/Indiana/Marengo","","0.00"),
+		array("73","America/Indiana/Petersburg","","0.00"),
+		array("74","America/Indiana/Tell_City","","0.00"),
+		array("75","America/Indiana/Vevay","","0.00"),
+		array("76","America/Indiana/Vincennes","","0.00"),
+		array("77","America/Indiana/Winamac","","0.00"),
+		array("78","America/Indianapolis","","0.00"),
+		array("79","America/Inuvik","","0.00"),
+		array("80","America/Iqaluit","","0.00"),
+		array("81","America/Jamaica","","0.00"),
+		array("82","America/Jujuy","","0.00"),
+		array("83","America/Juneau","","-9.00"),
+		array("84","America/Kentucky/Louisville","","0.00"),
+		array("85","America/Kentucky/Monticello","","0.00"),
+		array("86","America/Knox_IN","","0.00"),
+		array("87","America/La_Paz","","0.00"),
+		array("88","America/Lima","","0.00"),
+		array("89","America/Los_Angeles","Pacific Time","-8.00"),
+		array("90","America/Louisville","","0.00"),
+		array("91","America/Maceio","","0.00"),
+		array("92","America/Managua","","0.00"),
+		array("93","America/Manaus","","0.00"),
+		array("94","America/Marigot","","0.00"),
+		array("95","America/Martinique","","0.00"),
+		array("96","America/Matamoros","","0.00"),
+		array("97","America/Mazatlan","","0.00"),
+		array("98","America/Mendoza","","0.00"),
+		array("99","America/Menominee","","0.00"),
+		array("100","America/Merida","","0.00"),
+		array("101","America/Mexico_City","","-6.00"),
+		array("102","America/Miquelon","","0.00"),
+		array("103","America/Moncton","","0.00"),
+		array("104","America/Monterrey","","0.00"),
+		array("105","America/Montevideo","","0.00"),
+		array("106","America/Montreal","","0.00"),
+		array("107","America/Montserrat","","0.00"),
+		array("108","America/Nassau","","0.00"),
+		array("109","America/New_York","Eastern Time","-5.00"),
+		array("110","America/Nipigon","","0.00"),
+		array("111","America/Nome","","0.00"),
+		array("112","America/Noronha","","0.00"),
+		array("113","America/North_Dakota/Center","","0.00"),
+		array("114","America/North_Dakota/New_Salem","","0.00"),
+		array("115","America/Ojinaga","","0.00"),
+		array("116","America/Panama","","0.00"),
+		array("117","America/Pangnirtung","","0.00"),
+		array("118","America/Paramaribo","","0.00"),
+		array("119","America/Phoenix","","0.00"),
+		array("120","America/Port-au-Prince","","0.00"),
+		array("121","America/Port_of_Spain","","0.00"),
+		array("122","America/Porto_Acre","","0.00"),
+		array("123","America/Porto_Velho","","0.00"),
+		array("124","America/Puerto_Rico","","0.00"),
+		array("125","America/Rainy_River","","0.00"),
+		array("126","America/Rankin_Inlet","","0.00"),
+		array("127","America/Recife","","0.00"),
+		array("128","America/Regina","","0.00"),
+		array("129","America/Resolute","","0.00"),
+		array("130","America/Rio_Branco","","0.00"),
+		array("131","America/Rosario","","0.00"),
+		array("132","America/Santa_Isabel","","0.00"),
+		array("133","America/Santarem","","0.00"),
+		array("134","America/Santiago","","0.00"),
+		array("135","America/Santo_Domingo","","0.00"),
+		array("136","America/Sao_Paulo","","0.00"),
+		array("137","America/Scoresbysund","","0.00"),
+		array("138","America/Shiprock","","0.00"),
+		array("139","America/St_Barthelemy","","0.00"),
+		array("140","America/St_Johns","","-3.50"),
+		array("141","America/St_Kitts","","0.00"),
+		array("142","America/St_Lucia","","0.00"),
+		array("143","America/St_Thomas","","0.00"),
+		array("144","America/St_Vincent","","0.00"),
+		array("145","America/Swift_Current","","0.00"),
+		array("146","America/Tegucigalpa","","0.00"),
+		array("147","America/Thule","","0.00"),
+		array("148","America/Thunder_Bay","","0.00"),
+		array("149","America/Tijuana","","0.00"),
+		array("150","America/Toronto","","0.00"),
+		array("151","America/Tortola","","0.00"),
+		array("152","America/Vancouver","","0.00"),
+		array("153","America/Virgin","","0.00"),
+		array("154","America/Whitehorse","","0.00"),
+		array("155","America/Winnipeg","","0.00"),
+		array("156","America/Yakutat","","0.00"),
+		array("157","America/Yellowknife","","0.00"),
+	);
+
 	public function before($event = array()) {
 		$db = ConnectionManager::getDataSource($this->connection);
 		$db->cacheSources = false;
@@ -333,6 +493,9 @@ class LocationSchema extends CakeSchema {
 				break;
 				case 'countries':
 					$this->insertCountries();
+				break;
+				case 'timezones':
+					$this->insertTimezones();
 				break;
 			}
 		}
@@ -359,6 +522,16 @@ class LocationSchema extends CakeSchema {
 		),
 		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
 	);
+	public $timezones = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 8, 'key' => 'primary'),
+		'title' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 150, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'abbr' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 64, 'collate' => 'latin1_swedish_ci', 'charset' => 'latin1'),
+		'offset' => array('type' => float, 'null' => false, 'default' => '0.00', 'length' => '10,7'),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1),
+		),
+		'tableParameters' => array('charset' => 'latin1', 'collate' => 'latin1_swedish_ci', 'engine' => 'MyISAM')
+	);
 	
 	private function insertCountries() {
 		$Country = ClassRegistry::init('Location.Country');
@@ -382,5 +555,16 @@ class LocationSchema extends CakeSchema {
 			}
 		}
 		return $State->saveAll($data);
+	}
+	
+	private function insertTimezones() {
+		$Timezone = ClassRegistry::init('Location.Timezone');
+		$Timezone->create();
+		$data = array();
+		foreach ($this->timezoneData as $timezone) {
+			list($id, $title, $abbr) = $timezone;
+			$data[] = compact(array('id', 'title', 'abbr'));
+		}
+		return $Timezone->saveAll($data);
 	}
 }
