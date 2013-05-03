@@ -9,7 +9,7 @@ class TimezoneComponent extends Component {
 	
 	function startup(Controller $controller) {
 		$this->controller = $controller;
-		$this->set();
+	//	$this->set();
 		return true;
 	}
 	
