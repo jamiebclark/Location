@@ -28,7 +28,7 @@ class TimezoneComponent extends Component {
 		date_default_timezone_set($timezone);
 		putenv("TZ-$timezone");
 		
-		$Timezone->query('SET time_zone = '.$timezoneOffset.'');
+		//$Timezone->query('SET time_zone = '.$timezoneOffset.'');
 	
 		$this->controller->set(compact('timezone'));
 		$this->controller->set(compact('timezoneOffset'));
