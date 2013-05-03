@@ -3,8 +3,22 @@ class MappableBehavior extends ModelBehavior {
 	var $name = 'Mappable';
 	
 	function setup(Model &$Model, $settings = array()) {
-		$Model->bindModel(array(
-			'belongsTo' => array(
+		$default = array(
+			'validate' => false,
+			'google' => false,
+			'location' => true,
+			'timezone' => false,
+		);
+		if (!isset($this->settings[$Model->alias])) {
+			$this->settings[$Model->alias] = $default;
+		}
+		$this->settings[$Model->alias] = array_merge($this->settings[$Model->alias], (array) $settings);
+		
+		$settings =& $this->settings[$Model->alias];
+		//Binds to location models
+		$belongsTo = array();
+		if ($settings['location']) {
+			$belongsTo += array(
 				'State' => array(
 					'className' => 'Location.State',
 					'foreignKey' => 'state',
@@ -12,8 +26,15 @@ class MappableBehavior extends ModelBehavior {
 				'Country' => array(
 					'className' => 'Location.Country',
 					'foreignKey' => 'country',
-				)
-			)
-		), false);
+				),
+			);
+		}
+		if ($settings['timezone']) {
+			$belongsTo['Timezone'] = array(
+				'className' => 'Location.Timezone', 
+				'foreignKey' => 'timezone_id'
+			);
+		}
+		$Model->bindModel(compact('belongsTo'), false);
 	}
 }

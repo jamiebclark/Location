@@ -29,7 +29,7 @@ class SelectListBehavior extends ModelBehavior {
 			);
 		}
 	}
-	
+		function selectListCondensed(Model $Model, $options = array()) {		}	
 	function selectList(&$Model, $options = array()) {
 		$options = array_merge($this->settings[$Model->alias], (array) $options);
 		extract($options);
