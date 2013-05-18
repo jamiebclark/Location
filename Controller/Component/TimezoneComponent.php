@@ -30,7 +30,9 @@ class TimezoneComponent extends Component {
 		
 		//$Timezone->query('SET time_zone = '.$timezoneOffset.'');
 	
-		$this->controller->set(compact('timezone'));
-		$this->controller->set(compact('timezoneOffset'));
+		if (isset($this->controller)) {
+			$this->controller->set(compact('timezone'));
+			$this->controller->set(compact('timezoneOffset'));
+		}
 	}	
 }
