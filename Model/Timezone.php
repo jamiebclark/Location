@@ -10,12 +10,8 @@ class Timezone extends LocationAppModel {
 		}
 		$timezone = $this->find('first', array(
 			'recursive' => -1,
-			'fields' => array(
-				$this->alias . '.id'
-			),
-			'conditions' => array(
-				$this->alias . '.title' => $timezoneStr
-			)
+			'fields' => array($this->alias . '.id'),
+			'conditions' => array($this->alias . '.title' => $timezoneStr)
 		));
 		
 		if ($timezone) {

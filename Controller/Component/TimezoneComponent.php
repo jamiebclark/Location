@@ -9,7 +9,7 @@ class TimezoneComponent extends Component {
 	
 	function startup(Controller $controller) {
 		$this->controller = $controller;
-	//	$this->set();
+		//$this->set();
 		return true;
 	}
 	
@@ -26,10 +26,9 @@ class TimezoneComponent extends Component {
 		$Timezone = ClassRegistry::init('Location.Timezone');
 
 		date_default_timezone_set($timezone);
-		putenv("TZ-$timezone");
+		putenv("TZ=$timezone");
+		$Timezone->getDataSource()->execute('SET time_zone = "'.$timezone.'"');
 		
-		//$Timezone->query('SET time_zone = '.$timezoneOffset.'');
-	
 		if (isset($this->controller)) {
 			$this->controller->set(compact('timezone'));
 			$this->controller->set(compact('timezoneOffset'));
