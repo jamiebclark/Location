@@ -36,6 +36,7 @@ class MappableBehavior extends ModelBehavior {
 			);
 			ClassRegistry::init('Location.Timezone')->bindModel(array('hasMany' => array($Model->alias)), false);
 		}
+		debug('Binding Mappable');
 		$Model->bindModel(compact('belongsTo'), false);
 	}
 }
