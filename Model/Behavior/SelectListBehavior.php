@@ -1,4 +1,5 @@
 <?php
+App::uses('Param', 'Location.Lib');
 class SelectListBehavior extends ModelBehavior {
 	var $settings = array();
 	
