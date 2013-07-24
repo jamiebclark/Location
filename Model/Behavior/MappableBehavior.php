@@ -5,7 +5,7 @@ class MappableBehavior extends ModelBehavior {
 	function setup(Model &$Model, $settings = array()) {
 		$default = array(
 			'validate' => false,
-			'google' => false,
+			//'google' => false, TODO: Add Google Location Saving
 			'location' => true,
 			'timezone' => false,
 		);
@@ -29,6 +29,7 @@ class MappableBehavior extends ModelBehavior {
 				),
 			);
 		}
+		
 		if ($settings['timezone']) {
 			$belongsTo['Timezone'] = array(
 				'className' => 'Location.Timezone', 
