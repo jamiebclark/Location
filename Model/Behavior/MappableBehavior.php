@@ -2,7 +2,7 @@
 class MappableBehavior extends ModelBehavior {
 	var $name = 'Mappable';
 	
-	function setup(Model &$Model, $settings = array()) {
+	function setup(Model $Model, $settings = array()) {
 		$default = array(
 			'validate' => false,
 			//'google' => false, TODO: Add Google Location Saving
