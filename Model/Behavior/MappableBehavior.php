@@ -27,17 +27,17 @@ class MappableBehavior extends ModelBehavior {
 		
 		//Binds to location models
 		$belongsTo = array();
-		if ($settings['location']) {
-			$belongsTo += array(
-				'State' => array(
-					'className' => 'Location.State',
-					'foreignKey' => $stateField,
-				),
-				'Country' => array(
-					'className' => 'Location.Country',
-					'foreignKey' => $countryField,
-				),
-			);
+		if (!empty($settings['location'])) {
+			$joins = array('State' => $stateField, 'Country' => $countryField);
+			foreach ($joins as $joinModel => $foreignKey):
+				if (
+					$settings['location'] === true || 
+					(is_array($settings['location']) && in_array($joinModel, $settings['location'])) ||
+					$settings['location'] == $joinModel
+				) {
+					$belongsTo[$joinModel] = array('className' => 'Location.' . $joinModel) + compact('foreignKey');
+				}
+			endforeach;
 		}
 		
 		if ($settings['timezone']) {
