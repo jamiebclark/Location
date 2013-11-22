@@ -74,7 +74,7 @@ class MappableBehavior extends ModelBehavior {
 		} else {
 			$Model->validate[$field] = array();
 		}
-		$Model->validate[$field][] = compact('rule', 'message');
+		$Model->validate[$field][] = compact('rule', 'message') + array('required' => 1);
 		return true;
 	}
 }
