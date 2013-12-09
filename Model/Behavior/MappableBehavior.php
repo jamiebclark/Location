@@ -1,4 +1,5 @@
 <?php
+App::uses('GoogleMaps', 'Location.Lib');
 class MappableBehavior extends ModelBehavior {
 	var $name = 'Mappable';
 	
@@ -64,6 +65,45 @@ class MappableBehavior extends ModelBehavior {
 				$this->mappableValidate($Model, $field, 'notEmpty', $message);
 			}
 		}
+	}
+	
+	function afterSave(Model $Model, $created = false, $options = array()) {
+		if (!empty($this->settings[$Model->alias]['geocode'])) {
+			$this->setGoogleLocation($Model);
+		}
+		return parent::afterSave($Model, $created, $options);
+	}
+	
+	function setGoogleLocation(Model $Model) {
+		if (!empty($Model->data[$Model->alias])) {
+			$data =& $Model->data[$Model->alias];
+		} else {
+			$data =& $Model->data;
+		}
+		if ($Model->schema('lat') && $Model->schema('lon') && !empty($data['state'])) {
+			$keys = array('addline1', 'addline2', 'city', 'state', 'zip', 'country');
+			$address = '';
+			foreach ($keys as $key) {
+				if (!empty($data[$key])) {
+					$address .= $data[$key] . ' ';
+				}
+			}
+			$geocode = GoogleMaps::geocode($address);
+			if (!empty($geocode)) {
+				$setData = array(
+					$Model->escapeField('lat') => $geocode['lat'],
+					$Model->escapeField('lon') => $geocode['lon'],
+				);
+				/**
+				//This has been removed after geocode v 3
+				if ($Model->schema('geocode_accuracy')) {
+					$setData[$Model->escapeField('geocode_accuracy')] = $geocode['accuracy'];
+				}
+				*/
+				$Model->updateAll($setData, array($Model->escapeField($this->primaryKey) => $Model->id));
+			}
+		}
+		return true;
 	}
 	
 	function mappableValidate($Model, $field, $rule, $message = null) {
