@@ -100,7 +100,7 @@ class MappableBehavior extends ModelBehavior {
 					$setData[$Model->escapeField('geocode_accuracy')] = $geocode['accuracy'];
 				}
 				*/
-				$Model->updateAll($setData, array($Model->escapeField($this->primaryKey) => $Model->id));
+				$Model->updateAll($setData, array($Model->escapeField($Model->primaryKey) => $Model->id));
 			}
 		}
 		return true;
