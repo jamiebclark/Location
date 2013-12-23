@@ -122,7 +122,7 @@ class MappableBehavior extends ModelBehavior {
 	
 	public function validateMapAddress($Model, $result, $prefix = null) {
 		$addressString = $this->getMapAddressString($Model, $result, false, $prefix);
-		return !empty($addressString) ? GoogleMaps::validate($addressString) : null;
+		return !empty($addressString) ? GoogleMaps::validate($addressString, GoogleMaps::MAILING) : null;
 	}
 	
 	/**

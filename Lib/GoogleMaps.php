@@ -13,14 +13,9 @@ class GoogleMaps {
 	public static $_validMailingTypes = array('street_address', 'postal_code');
 	public static $_validMappingTypes = array('street_address', 'intersection');
 
-	public static function &getInstance() {
-		static $instance = array();
-		if (!$instance) {
-			$instance[0] = new GoogleMaps();
-		}
-		return $instance[0];
-	}
-
+	const MAPPING = 1;
+	const MAILING = 2;
+	
 	public static function isPoBox($address) {
 		return preg_match('/^p[\.\s]*o[\.\s]*(?:box)?[\s]*[\d]+/i', $address);
 	}
@@ -32,15 +27,19 @@ class GoogleMaps {
 	 *
 	 * @return bool True if valid, false if not
 	 **/
-	public static function validate($address) {
-		$self =& GoogleMaps::getInstance();
-
-		//Skips validating PO Boxes
-		if ($self->isPoBox($address)) {
-			return true;
+	public static function validate($address, $type = null) {
+		$geocode = self::geocode($address, true);
+		if (empty($geocode)) {
+			return false;
 		}
-		$geocode = $self->geocode($address);
-		return !empty($geocode);
+		if (!empty($type)) {
+			if ($type == self::MAILING) {
+				return $geocode['mailing_valid'];
+			} else if ($type == self::MAPPING) {
+				return $geocode['mapping_valid'];
+			}
+		}
+		return $geocode['all_valid'];
 	}
 	
 	/**
@@ -50,9 +49,10 @@ class GoogleMaps {
 	 *
 	 * @return Array|bool An array of longitude, latitude and location type
 	 **/
-	public static function geocode($address, $googleKey = null) {
+	public static function geocode($address, $validate = null) {
 		$address = str_replace(array(' & '), array(' and '), html_entity_decode($address));
-		$address = urlencode(urldecode($address));
+		//$address = urlencode(urldecode($address));
+		
 		//v.3
 		$sensor = 'false';
 		$url = 'http://maps.googleapis.com/maps/api/geocode/json?' . http_build_query(compact('address', 'sensor'));
@@ -72,29 +72,29 @@ class GoogleMaps {
 		}
 		$json = json_decode($fileContents);
 		$results = $json->results;
-
 		if (!empty($json) && $json->status == 'OK') {
-			$valid = false;
+			$validCount = 0;
 			$validCheck = array(
-				'mailing' => array('valid' => false, 'types' => self::$_validMailingTypes),
-				'mapping' => array('valid' => false, 'types' => self::$_validMappingTypes),
+				self::MAILING => array('valid' => false, 'types' => self::$_validMailingTypes),
+				self::MAPPING => array('valid' => false, 'types' => self::$_validMappingTypes),
 			);
 			foreach ($results[0]->types as $type) {
 				foreach ($validCheck as $key => $vals) {
 					if (!$validCheck[$key]['valid'] && in_array($type, $vals['types'])) {
 						$validCheck[$key]['valid'] = true;
-						$valid = true;
+						$validCount++;
 					}
 				}
 			}
-			if ($valid) {
+			if ($validCount) {
 				$_SESSION['gmap_cache'][$url] = $fileContents;
 				$return = array(
 					'lat' => $results[0]->geometry->location->lat,
 					'lon' => $results[0]->geometry->location->lng,
 					//'accuracty' => $geo->location->lng,
-					'mailing_valid' => $validCheck['mailing']['valid'],
-					'mapping_valid' => $validCheck['mapping']['valid'],
+					'mailing_valid' => $validCheck[self::MAILING]['valid'],
+					'mapping_valid' => $validCheck[self::MAPPING]['valid'],
+					'all_valid' => ($validCount == count($validCheck)),
 				);
 				return $return;
 			}
