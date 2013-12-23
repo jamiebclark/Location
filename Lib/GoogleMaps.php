@@ -8,6 +8,11 @@
  *
  **/
 class GoogleMaps {
+
+	public static $_validLocationTypes = array('ROOFTOP', 'RANGE_INTERPOLATED');
+	public static $_validMailingTypes = array('street_address', 'postal_code');
+	public static $_validMappingTypes = array('street_address', 'intersection');
+
 	public static function &getInstance() {
 		static $instance = array();
 		if (!$instance) {
@@ -46,8 +51,8 @@ class GoogleMaps {
 	 * @return Array|bool An array of longitude, latitude and location type
 	 **/
 	public static function geocode($address, $googleKey = null) {
+		$address = str_replace(array(' & '), array(' and '), html_entity_decode($address));
 		$address = urlencode(urldecode($address));
-		
 		//v.3
 		$sensor = 'false';
 		$url = 'http://maps.googleapis.com/maps/api/geocode/json?' . http_build_query(compact('address', 'sensor'));
@@ -67,15 +72,31 @@ class GoogleMaps {
 		}
 		$json = json_decode($fileContents);
 		$results = $json->results;
-		
+
 		if (!empty($json) && $json->status == 'OK') {
-			$geo = $results[0]->geometry;
-			$accuracy = $geo->location_type;
-			if (in_array($accuracy, array('ROOFTOP', 'RANGE_INTERPOLATED'))) {
-				$lat = $geo->location->lat;
-				$lon = $geo->location->lng;
+			$valid = false;
+			$validCheck = array(
+				'mailing' => array('valid' => false, 'types' => self::$_validMailingTypes),
+				'mapping' => array('valid' => false, 'types' => self::$_validMappingTypes),
+			);
+			foreach ($results[0]->types as $type) {
+				foreach ($validCheck as $key => $vals) {
+					if (!$validCheck[$key]['valid'] && in_array($type, $vals['types'])) {
+						$validCheck[$key]['valid'] = true;
+						$valid = true;
+					}
+				}
+			}
+			if ($valid) {
 				$_SESSION['gmap_cache'][$url] = $fileContents;
-				return compact('lat', 'lon', 'accuracy');
+				$return = array(
+					'lat' => $results[0]->geometry->location->lat,
+					'lon' => $results[0]->geometry->location->lng,
+					//'accuracty' => $geo->location->lng,
+					'mailing_valid' => $validCheck['mailing']['valid'],
+					'mapping_valid' => $validCheck['mapping']['valid'],
+				);
+				return $return;
 			}
 		}
 		return false;

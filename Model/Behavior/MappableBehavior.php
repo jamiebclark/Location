@@ -92,11 +92,12 @@ class MappableBehavior extends ModelBehavior {
 					$address .= $data[$key] . ' ';
 				}
 			}
-			
 			if ($geocode = GoogleMaps::geocode($address)) {
 				$vals['geocode_valid'] = true;
 				$vals['lat'] = $geocode['lat'];
 				$vals['lon'] = $geocode['lon'];
+				$vals['map_valid'] = $geocode['mapping_valid'];
+				$vals['mail_valid'] = $geocode['mailing_valid'];
 			}
 		}
 		$setData = array();
