@@ -1,5 +1,50 @@
 <?php
+/**
+ * GoogleMaps Utility
+ * By: Jamie Clark
+ * 12/20/2013
+ *
+ * Used to utilize the GoogleMaps API
+ *
+ **/
 class GoogleMaps {
+	public static function &getInstance() {
+		static $instance = array();
+		if (!$instance) {
+			$instance[0] = new GoogleMaps();
+		}
+		return $instance[0];
+	}
+
+	public static function isPoBox($address) {
+		return preg_match('/^p[\.\s]*o[\.\s]*(?:box)?[\s]*[\d]+/i', $address);
+	}
+	
+	/**
+	 * Checks if address is a valid address, either a PO BOX or geocodable
+	 *
+	 * @param string $address The address to check
+	 *
+	 * @return bool True if valid, false if not
+	 **/
+	public static function validate($address) {
+		$self =& GoogleMaps::getInstance();
+
+		//Skips validating PO Boxes
+		if ($self->isPoBox($address)) {
+			return true;
+		}
+		$geocode = $self->geocode($address);
+		return !empty($geocode);
+	}
+	
+	/**
+	 * Polls Google Maps API to get longitude, latitude and accuracty of an address
+	 * 
+	 * @param string $address The address to check
+	 *
+	 * @return Array|bool An array of longitude, latitude and location type
+	 **/
 	public static function geocode($address, $googleKey = null) {
 		$address = urlencode(urldecode($address));
 		
@@ -33,7 +78,6 @@ class GoogleMaps {
 				return compact('lat', 'lon', 'accuracy');
 			}
 		}
-		
 		return false;
 	}
 }
