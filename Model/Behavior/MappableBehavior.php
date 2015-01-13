@@ -108,7 +108,7 @@ class MappableBehavior extends ModelBehavior {
 			}
 		}
 		
-		/**
+		/*
 		//This has been removed after geocode v 3
 		if ($Model->schema('geocode_accuracy')) {
 			$setData[$Model->escapeField('geocode_accuracy')] = $geocode['accuracy'];
