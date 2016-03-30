@@ -62,7 +62,7 @@ class MappableBehavior extends ModelBehavior {
 				if (empty($field)) {
 					continue;
 				}
-				$this->mappableValidate($Model, $field, 'notEmpty', $message);
+				$this->mappableValidate($Model, $field, 'notBlank', $message);
 			}
 		}
 	}
