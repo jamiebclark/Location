@@ -1,4 +1,6 @@
 <?php
+App::uses('Hash', 'Lib');
+
 class Timezone extends LocationAppModel {
 	var $name = 'Timezone';	
 	var $recursive = -1;
@@ -11,7 +13,7 @@ class Timezone extends LocationAppModel {
 		-4 => 'Atlantic Time',
 	);
 
-	function findId($timezoneStr = null) {
+	public function findId($timezoneStr = null) {
 		//Finds user's timezone
 		if (empty($timezoneStr)) {
 			$timezoneStr = date_default_timezone_get();
@@ -29,7 +31,20 @@ class Timezone extends LocationAppModel {
 		}
 	}
 	
-	function selectList() {
+	public function selectLabelList() {
+		$result = $this->find('all', [
+			'fields' => [
+				$this->escapeField(),
+				$this->escapeField('label'),
+			],
+			'conditions' => [
+				'NOT' => [$this->escapeField('label') => null]
+			]
+		]);
+		return Hash::combine($result, '{n}.Timezone.id', '{n}.Timezone.label');
+	}
+	
+	public function selectList() {
 		$result = $this->find('all');
 		$return = array();
 		foreach($result as $row) {
