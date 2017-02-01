@@ -71,6 +71,11 @@ class GoogleMaps {
 			}
 		}
 		$json = json_decode($fileContents);
+		if (empty($json)) {
+			CakeLog::error("Could not retrieve map coordinates: $url");
+			return false;
+		}
+		
 		$results = $json->results;
 		if (!empty($json) && $json->status == 'OK') {
 			$validCount = 0;
