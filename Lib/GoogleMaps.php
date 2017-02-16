@@ -10,8 +10,8 @@
 class GoogleMaps {
 
 	public static $_validLocationTypes = array('ROOFTOP', 'RANGE_INTERPOLATED');
-	public static $_validMailingTypes = array('street_address', 'postal_code');
-	public static $_validMappingTypes = array('street_address', 'intersection');
+	public static $_validMailingTypes = array('street_address', 'street_number', 'postal_code');
+	public static $_validMappingTypes = array('street_address', 'street_number', 'intersection');
 
 	const MAPPING = 1;
 	const MAILING = 2;
@@ -71,6 +71,7 @@ class GoogleMaps {
 			}
 		}
 		$json = json_decode($fileContents);
+
 		if (empty($json)) {
 			CakeLog::error("Could not retrieve map coordinates: $url");
 			return false;
@@ -83,11 +84,14 @@ class GoogleMaps {
 				self::MAILING => array('valid' => false, 'types' => self::$_validMailingTypes),
 				self::MAPPING => array('valid' => false, 'types' => self::$_validMappingTypes),
 			);
-			foreach ($results[0]->types as $type) {
-				foreach ($validCheck as $key => $vals) {
-					if (!$validCheck[$key]['valid'] && in_array($type, $vals['types'])) {
-						$validCheck[$key]['valid'] = true;
-						$validCount++;
+			$components = $results[0]->address_components;
+			foreach ($components as $component) {
+				foreach ($component->types as $type) {
+					foreach ($validCheck as $key => $vals) {
+						if (!$validCheck[$key]['valid'] && in_array($type, $vals['types'])) {
+							$validCheck[$key]['valid'] = true;
+							$validCount++;
+						}
 					}
 				}
 			}
