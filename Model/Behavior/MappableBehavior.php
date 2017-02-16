@@ -69,27 +69,37 @@ class MappableBehavior extends ModelBehavior {
 	
 	public function afterSave(Model $Model, $created = false, $options = array()) {
 		if (!empty($this->settings[$Model->alias]['geocode'])) {
-			$this->setGoogleLocation($Model);
+			if (!empty($Model->data[$Model->alias])) {
+				$data = $Model->data[$Model->alias];
+			} else {
+				$data = $Model->data;
+			}
+			$this->_setGoogleLocation($Model, $data);
 		}
 		return parent::afterSave($Model, $created, $options);
 	}
 	
-	public function setGoogleLocation(Model $Model) {
-		if (!empty($Model->data[$Model->alias])) {
-			$data =& $Model->data[$Model->alias];
-		} else {
-			$data =& $Model->data;
-		}
+	public function setGoogleLocation(Model $Model, $modelId) {
+		$result = $Model->read(null, $modelId);
+		return $this->_setGoogleLocation($Model, $result[$Model->alias]);
+	}
 
+/**
+ * Updates the Google location fields based on the model data
+ *
+ * @param Model $Model The Model object
+ * @param array $modelData The array of information about the current model
+ * @return bool|null True if success. False if failed. Null if no change
+ **/
+	protected function _setGoogleLocation(Model $Model, $modelData) {
 		$vals = array('lat', 'lon', 'geocode_valid');
 		$vals = array_combine($vals, array(null, null, false));
-
-		if (!empty($data['state'])) {
+		if (!empty($modelData['state'])) {
 			$keys = array('addline1', 'city', 'state', 'zip', 'country');
 			$address = '';
 			foreach ($keys as $key) {
-				if (!empty($data[$key])) {
-					$address .= $data[$key] . ' ';
+				if (!empty($modelData[$key])) {
+					$address .= $modelData[$key] . ' ';
 				}
 			}
 			if ($geocode = GoogleMaps::geocode($address)) {
@@ -107,7 +117,6 @@ class MappableBehavior extends ModelBehavior {
 				$setData[$Model->escapeField($field)] = $val;
 			}
 		}
-		
 		/*
 		//This has been removed after geocode v 3
 		if ($Model->schema('geocode_accuracy')) {
@@ -115,9 +124,9 @@ class MappableBehavior extends ModelBehavior {
 		}
 		*/
 		if (!empty($setData)) {
-			$Model->updateAll($setData, array($Model->escapeField($Model->primaryKey) => $Model->id));
+			return $Model->updateAll($setData, array($Model->escapeField($Model->primaryKey) => $Model->id));
 		}
-		return true;
+		return null;
 	}
 	
 	public function validateMapAddress($Model, $result, $prefix = null) {
