@@ -55,7 +55,11 @@ class GoogleMaps {
 		
 		//v.3
 		$sensor = 'false';
-		$url = 'http://maps.googleapis.com/maps/api/geocode/json?' . http_build_query(compact('address', 'sensor'));
+		$params = compact('address', 'sensor');
+		if ($key = Configure::read('Location.GoogleMapsApiKey')) {
+			$params['key'] = $key;
+		}
+		$url = 'http://maps.googleapis.com/maps/api/geocode/json?' . http_build_query($params);
 		
 		if (!empty($_SESSION['gmap_cache'][$url])) {
 			$fileContents = $_SESSION['gmap_cache'][$url];
