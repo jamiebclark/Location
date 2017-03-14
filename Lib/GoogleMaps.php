@@ -60,7 +60,7 @@ class GoogleMaps {
 			$params['key'] = $key;
 		}
 		$url = (!empty($params['key']) ? 'https' : 'http') . '://maps.googleapis.com/maps/api/geocode/json?' . http_build_query($params);
-		
+			
 		if (!empty($_SESSION['gmap_cache'][$url])) {
 			$fileContents = $_SESSION['gmap_cache'][$url];
 		} else {
